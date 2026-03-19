@@ -112,7 +112,7 @@ This report includes:
 **Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `LogonType` values indicating remote access.
 
 ## KQL Query:
-
+```kql
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
 | where DeviceName == "azuki-sl"
@@ -125,8 +125,7 @@ DeviceLogonEvents
 <img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/9d38f243-7678-486f-b386-8e018bdc8313" />
 
 
-
-> **Why This Matters:** RDP connections leave network traces that identify the source of unauthorized access. Determining the origin helps with threat actor attribution and blocking ongoing attacks.
+**Why This Matters:** RDP connections leave network traces that identify the source of unauthorized access. Determining the origin helps with threat actor attribution and blocking ongoing attacks.
 
 ---
 
