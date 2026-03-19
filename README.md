@@ -668,6 +668,4 @@ Implement detection use cases for:
 - Conduct routine tabletop exercises simulating this exact intrusion pattern
 - Apply continuous threat-hunting cycles instead of reactive investigations
 
----
 
-*Report generated as part of the "Port of Entry" threat hunt exercise.*
