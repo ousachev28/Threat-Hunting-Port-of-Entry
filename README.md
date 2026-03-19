@@ -2,9 +2,9 @@
 
 <img width="740" height="1110" alt="519130689-f6352076-3a19-4fc9-abdb-a2a3060c1ca7" src="https://github.com/user-attachments/assets/25894e34-0352-4c46-a393-937751e0cc37" />
 
-# 📚 Table of Contents
+# Table of Contents
 
-- [Threat Hunt: "Port of Entry"](#-threat-hunt-port-of-entry)
+- [Threat Hunt: "Port of Entry"](#-threat-hunt-"port-of-entry")
 - [Platforms and Tools](#-platforms-and-tools)
 - [Summary of Findings (Flags)](#-summary-of-findings-flags)
   - [Flag 1: INITIAL ACCESS - Remote Access Source](#flag-1--initial-access-remote-access-source)
@@ -32,6 +32,7 @@
 - [Lessons Learned](#-lessons-learned)
 - [Recommendations for Remediation](#-recommendations-for-remediation)
 
+# Threat Hunt: "Port of Entry"
 ## Scenario
 
 **INCIDENT BRIEF — Azuki Import/Export **
@@ -53,14 +54,14 @@ DeviceProcessEvents
 
 This report includes:
 
-- 📅 Timeline reconstruction of auditing, reconnaissance, and attempted exfiltration of data on the device `azuki-sl`
-- 📜 Detailed queries using Microsoft Defender Advanced Hunting (KQL)
-- 🎯 MITRE ATT&CK mapping to understand TTP alignment
-- 🧪 Evidence-based summaries supporting each flag and behavior discovered
+- Timeline reconstruction of auditing, reconnaissance, and attempted exfiltration of data on the device `azuki-sl`
+- Detailed queries using Microsoft Defender Advanced Hunting (KQL)
+- MITRE ATT&CK mapping to understand TTP alignment
+- Evidence-based summaries supporting each flag and behavior discovered
 
 ---
 
-## 🧰 Platforms and Tools
+## Platforms and Tools
 
 **Analysis Environment:**
 - Microsoft Defender for Endpoint
@@ -73,7 +74,7 @@ This report includes:
 
 ---
 
-## 📔 Summary of Findings (Flags)
+## Summary of Findings (Flags)
 
 | Flag | Objective | Finding | Timestamp |
 |---|---|---|---|
@@ -100,7 +101,7 @@ This report includes:
 
 ---
 
-## 🚩 Flag Details
+## Flag Details
 
 ### Flag 1 — INITIAL ACCESS: Remote Access Source
 
@@ -540,7 +541,7 @@ DeviceProcessEvents
 
 ---
 
-## 🎯 MITRE ATT&CK Technique Mapping
+## MITRE ATT&CK Technique Mapping
 
 | Flag | Description | MITRE ATT&CK Technique(s) |
 |---|---|---|
@@ -567,7 +568,7 @@ DeviceProcessEvents
 
 ---
 
-## 🧾 Conclusion
+## Conclusion
 
 The threat hunt revealed a structured, multi-stage intrusion that relied heavily on **living-off-the-land techniques**, stealthy persistence mechanisms, system reconnaissance, and staged data exfiltration. The adversary leveraged legitimate remote access points, blended malicious activity with normal Windows processes, and created deceptive artifacts to obscure intent.
 
@@ -584,7 +585,7 @@ The hunt demonstrated how even lightweight attacker activity leaves detectable f
 
 ---
 
-## 🎓 Lessons Learned
+## Lessons Learned
 
 **1. Even simple attacker tradecraft leaves multi-telemetry footprints.**
 The operator used mostly built-in Windows tools (`PowerShell`, `explorer.exe`, `schtasks.exe`). Despite the low profile, the attack chain was still traceable through correlated timestamps, directory activity, registry artifacts, and process execution logs.
@@ -610,7 +611,7 @@ Without these data sources, identifying the attacker's sequence would be signifi
 
 ---
 
-## 🛠️ Recommendations for Remediation
+## Recommendations for Remediation
 
 ### 1. Harden Remote Access
 - Enforce MFA on all remote access tools (RDP, VPN, Remote Assistance)
