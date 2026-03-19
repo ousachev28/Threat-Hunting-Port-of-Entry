@@ -109,7 +109,7 @@ This report includes:
 
 **Flag Value:** `88.97.178.12` — `2025-11-19T00:57:18Z`
 
-**Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `LogonType` values indicating remote access.
+**Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `DeviceName` and "ActionType" values indicating remote access.
 
 **KQL Query:**
 ```
