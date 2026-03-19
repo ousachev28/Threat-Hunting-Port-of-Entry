@@ -112,7 +112,7 @@ This report includes:
 **Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `LogonType` values indicating remote access.
 
 **KQL Query:**
-```kql
+
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
 | where DeviceName == "azuki-sl"
