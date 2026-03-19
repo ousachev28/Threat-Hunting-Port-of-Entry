@@ -113,6 +113,7 @@ This report includes:
 
 **KQL Query:**
 ```
+//Public Remote IP that successfully logged on to "azuki-si"
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
 | where DeviceName == "azuki-sl"
