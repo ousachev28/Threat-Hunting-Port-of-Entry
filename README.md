@@ -37,7 +37,7 @@
 
 **INCIDENT BRIEF — Azuki Import/Export **
 
-> Competitor undercut our 6-year shipping contract by exactly 3%. Our supplier contracts and pricing data appeared on underground forums.
+Competitor undercut our 6-year shipping contract by exactly 3%. Our supplier contracts and pricing data appeared on underground forums.
 
 | Field | Details |
 |---|---|
