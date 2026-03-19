@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-- [Threat Hunt: "Port of Entry"](#-threat-hunt:-"port-of-entry")
+- [Threat Hunt: "Port of Entry"](#-threat-hunt-"port-of-entry")
 - [Platforms and Tools](#-platforms-and-tools)
 - [Summary of Findings (Flags)](#-summary-of-findings-flags)
   - [Flag 1: INITIAL ACCESS - Remote Access Source](#flag-1--initial-access-remote-access-source)
