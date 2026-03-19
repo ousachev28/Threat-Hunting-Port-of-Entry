@@ -112,14 +112,14 @@ This report includes:
 **Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `LogonType` values indicating remote access.
 
 **KQL Query:**
-
+```
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
 | where DeviceName == "azuki-sl"
 | where isnotempty(RemoteIP) and RemoteIPType == "Public"
 | where ActionType == "LogonSuccess"
 | project TimeGenerated, AccountName, DeviceName, ActionType, RemoteIP, RemoteIPType
-
+```
 **Evidence**
 
 <img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/9d38f243-7678-486f-b386-8e018bdc8313" />
