@@ -2,9 +2,39 @@
 
 <img width="740" height="1110" alt="519130689-f6352076-3a19-4fc9-abdb-a2a3060c1ca7" src="https://github.com/user-attachments/assets/25894e34-0352-4c46-a393-937751e0cc37" />
 
+# 📚 Table of Contents
+
+- [Threat Hunt: "Port of Entry"](#-threat-hunt-port-of-entry)
+- [Platforms and Tools](#-platforms-and-tools)
+- [Summary of Findings (Flags)](#-summary-of-findings-flags)
+  - [Flag 1: INITIAL ACCESS - Remote Access Source](#flag-1--initial-access-remote-access-source)
+  - [Flag 2: INITIAL ACCESS - Compromised User Account](#flag-2--initial-access-compromised-user-account)
+  - [Flag 3: DISCOVERY - Network Reconnaissance](#flag-3--discovery-network-reconnaissance)
+  - [Flag 4: DEFENSE EVASION - Malware Staging Directory](#flag-4--defense-evasion-malware-staging-directory)
+  - [Flag 5: DEFENSE EVASION - File Extension Exclusions](#flag-5--defense-evasion-file-extension-exclusions)
+  - [Flag 6: DEFENSE EVASION - Temporary Folder Exclusion](#flag-6--defense-evasion-temporary-folder-exclusion)
+  - [Flag 7: DEFENSE EVASION - Download Utility Abuse](#flag-7--defense-evasion-download-utility-abuse)
+  - [Flag 8: PERSISTENCE - Scheduled Task Name](#flag-8--persistence-scheduled-task-name)
+  - [Flag 9: PERSISTENCE - Scheduled Task Target](#flag-9--persistence-scheduled-task-target)
+  - [Flag 10: COMMAND & CONTROL - C2 Server Address](#flag-10--command--control-c2-server-address)
+  - [Flag 11: COMMAND & CONTROL - C2 Communication Port](#flag-11--command--control-c2-communication-port)
+  - [Flag 12: CREDENTIAL ACCESS - Credential Theft Tool](#flag-12--credential-access-credential-theft-tool)
+  - [Flag 13: CREDENTIAL ACCESS - Memory Extraction Module](#flag-13--credential-access-memory-extraction-module)
+  - [Flag 14: COLLECTION - Data Staging Archive](#flag-14--collection-data-staging-archive)
+  - [Flag 15: EXFILTRATION - Exfiltration Channel](#flag-15--exfiltration-exfiltration-channel)
+  - [Flag 16: ANTI-FORENSICS - Log Tampering](#flag-16--anti-forensics-log-tampering)
+  - [Flag 17: IMPACT - Persistence Account](#flag-17--impact-persistence-account)
+  - [Flag 18: EXECUTION - Malicious Script](#flag-18--execution-malicious-script)
+  - [Flag 19: LATERAL MOVEMENT - Secondary Target](#flag-19--lateral-movement-secondary-target)
+  - [Flag 20: LATERAL MOVEMENT - Remote Access Tool](#flag-20--lateral-movement-remote-access-tool)
+- [MITRE ATT&CK Technique Mapping](#-mitre-attck-technique-mapping)
+- [Conclusion](#-conclusion)
+- [Lessons Learned](#-lessons-learned)
+- [Recommendations for Remediation](#-recommendations-for-remediation)
+
 ## Scenario
 
-**INCIDENT BRIEF — Azuki Import/Export — 梓貿易株式会社**
+**INCIDENT BRIEF — Azuki Import/Export **
 
 > Competitor undercut our 6-year shipping contract by exactly 3%. Our supplier contracts and pricing data appeared on underground forums.
 
