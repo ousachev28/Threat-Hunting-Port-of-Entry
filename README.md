@@ -125,8 +125,7 @@ DeviceLogonEvents
 <img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/9d38f243-7678-486f-b386-8e018bdc8313" />
 
 
-**Why This Matters:** RDP connections leave network traces that identify the source of unauthorized access. Determining the origin helps with threat actor attribution and blocking ongoing attacks.
-
+**Why This Matters:** Remote Desktop Protocol connections leave network traces that identify the source of unauthorised access. Determining the origin helps with threat actor attribution and blocking ongoing attacks.
 ---
 
 ### Flag 2 — INITIAL ACCESS: Compromised User Account
