@@ -78,7 +78,7 @@ This report includes:
 
 | Flag | Objective | Finding | Timestamp |
 |---|---|---|---|
-| 1 | Identify the source IP address of the RDP connection | `88.97.178.12` was the IP address accessing the compromised account | `2025-11-19T18:36:18.503Z` |
+| 1 | Identify the source IP address of the RDP connection | `88.97.178.12` was the IP address accessing the compromised account | `2025-11-19T18:36:18.503997Z` |
 | 2 | Identify the user account that was compromised for initial access | The account `kenji.sato` has been compromised | `2025-11-19T00:57:18Z` |
 | 3 | Identify the command and argument used to enumerate network neighbours | `ARP.EXE -a` was executed for enumeration | `2025-11-19T19:04:01Z` |
 | 4 | Identify the PRIMARY staging directory where malware was stored | `C:\ProgramData\WindowsCache` was found to be the primary staging directory | `2025-11-19T19:05:33Z` |
