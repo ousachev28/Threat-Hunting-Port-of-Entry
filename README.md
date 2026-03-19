@@ -5,8 +5,8 @@
 # Table of Contents
 
 - [Threat Hunt: "Port of Entry"](#threat-hunt-port-of-entry)
-- [Platforms and Tools](#-platforms-and-tools)
-- [Summary of Findings (Flags)](#-summary-of-findings-flags)
+- [Platforms and Tools](#platforms-and-tools)
+- [Summary of Findings (Flags)](#summary-of-findings-flags)
   - [Flag 1: INITIAL ACCESS - Remote Access Source](#flag-1--initial-access-remote-access-source)
   - [Flag 2: INITIAL ACCESS - Compromised User Account](#flag-2--initial-access-compromised-user-account)
   - [Flag 3: DISCOVERY - Network Reconnaissance](#flag-3--discovery-network-reconnaissance)
@@ -27,10 +27,10 @@
   - [Flag 18: EXECUTION - Malicious Script](#flag-18--execution-malicious-script)
   - [Flag 19: LATERAL MOVEMENT - Secondary Target](#flag-19--lateral-movement-secondary-target)
   - [Flag 20: LATERAL MOVEMENT - Remote Access Tool](#flag-20--lateral-movement-remote-access-tool)
-- [MITRE ATT&CK Technique Mapping](#-mitre-attck-technique-mapping)
-- [Conclusion](#-conclusion)
-- [Lessons Learned](#-lessons-learned)
-- [Recommendations for Remediation](#-recommendations-for-remediation)
+- [MITRE ATT&CK Technique Mapping](#mitre-attck-technique-mapping)
+- [Conclusion](#conclusion)
+- [Lessons Learned](#lessons-learned)
+- [Recommendations for Remediation](#recommendations-for-remediation)
 
 # Threat Hunt: "Port of Entry"
 ## Scenario
