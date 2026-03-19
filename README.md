@@ -112,11 +112,13 @@ This report includes:
 **Detection Strategy:** Query logon events for interactive sessions from external sources during the incident timeframe. Use `DeviceLogonEvents` and filter by `LogonType` values indicating remote access.
 
 ```kql
+//Public Remote IP that successfully logged on to "azuki-si"
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
-| where LogonType == "RemoteInteractive"
-| project Timestamp, AccountName, RemoteIP, AdditionalFields
-| sort by AccountName
+| where DeviceName == "azuki-sl"
+| where isnotempty(RemoteIP)
+| where ActionType == "LogonSuccess"
+| project TimeGenerated, AccountName, DeviceName, ActionType, RemoteIP, RemoteIPType
 ```
 
 > **Why This Matters:** RDP connections leave network traces that identify the source of unauthorized access. Determining the origin helps with threat actor attribution and blocking ongoing attacks.
