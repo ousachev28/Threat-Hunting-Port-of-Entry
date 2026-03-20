@@ -222,11 +222,12 @@ DeviceProcessEvents
 
 **Objective:** Find how many file extensions were excluded from Windows Defender scanning.
 
-**Flag Value:** `3` — `2025-11-19T18:49:27Z`
+**Flag Value:** `3` — `2025-11-19T18:49:27.7301011Z`
 
 **Detection Strategy:** Search `DeviceRegistryEvents` for registry modifications to Windows Defender's exclusion settings. Count the unique file extensions added to the `Exclusions\Extensions` registry key.
 
-```kql
+**KQL Query:**
+```
 DeviceRegistryEvents
 | where DeviceName == "azuki-sl"
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
@@ -234,6 +235,11 @@ DeviceRegistryEvents
 | where RegistryKey startswith "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Defender\\Exclusions\\Extensions"
 | project Timestamp, DeviceName, RegistryKey, RegistryValueData, RegistryValueName
 ```
+**Evidence:**
+
+<img width="936" height="144" alt="image" src="https://github.com/user-attachments/assets/a82eeb87-9780-435e-bf05-753f12a7f17c" />
+<br>
+<br>
 
 > **Why This Matters:** Attackers add file extension exclusions to Windows Defender to prevent scanning of malicious files. Counting these exclusions reveals the scope of the attacker's defense evasion strategy.
 
