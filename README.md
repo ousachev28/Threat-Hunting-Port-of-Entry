@@ -249,7 +249,7 @@ DeviceRegistryEvents
 
 **Objective:** What temporary folder path was excluded from Windows Defender scanning?
 
-**Flag Value:** `C:\Users\KENJI~1.SAT\AppData\Local\Temp` — `2025-11-19T18:49:27Z`
+**Flag Value:** `C:\Users\KENJI~1.SAT\AppData\Local\Temp` — `2025-11-19T18:49:27.711334Z`
 
 **Detection Strategy:** Search `DeviceRegistryEvents` for folder path exclusions added to Windows Defender configuration. Focus on the `RegistryValueName` field for temporary folder paths.
 
@@ -262,6 +262,11 @@ DeviceRegistryEvents
 | where RegistryKey startswith "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows Defender\\Exclusions\\Paths"
 | project Timestamp, DeviceName, RegistryKey, RegistryValueData, RegistryValueName, InitiatingProcessFolderPath, InitiatingProcessFileName
 ```
+**Evidence:**
+
+<img width="1261" height="105" alt="image" src="https://github.com/user-attachments/assets/be5393b1-bdcf-4f34-9cc1-1424c4231386" />
+<br>
+<br>
 
 > **Why This Matters:** Attackers add folder path exclusions to Windows Defender to prevent scanning of directories used for downloading and executing malicious tools. These exclusions allow malware to run undetected.
 
