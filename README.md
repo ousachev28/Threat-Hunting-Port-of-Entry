@@ -166,7 +166,8 @@ DeviceLogonEvents
 
 **Detection Strategy:** Look for commands that reveal local network devices and hardware addresses. Check `DeviceProcessEvents` for network enumeration utilities executed after initial access.
 
-```kql
+**KQL Query:**
+```
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
@@ -180,6 +181,11 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
 | order by Timestamp asc
 ```
+<img width="1100" height="87" alt="image" src="https://github.com/user-attachments/assets/76ec62c3-5b4e-40ee-9bf0-af74c4ba0d29" />
+<br>
+<br>
+
+**Evidence**
 
 > **Why This Matters:** Attackers enumerate network topology to identify lateral movement opportunities and high-value targets. This reconnaissance activity is a key indicator of advanced persistent threats.
 
