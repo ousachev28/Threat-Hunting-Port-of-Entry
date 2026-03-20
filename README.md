@@ -121,7 +121,7 @@ DeviceLogonEvents
 | where ActionType == "LogonSuccess"
 | project TimeGenerated, AccountName, DeviceName, ActionType, RemoteIP, RemoteIPType
 ```
-**Evidence**
+**Evidence:**
 
 <img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/9d38f243-7678-486f-b386-8e018bdc8313" />
 <br>
@@ -148,7 +148,7 @@ DeviceLogonEvents
 | where ActionType == "LogonSuccess"
 | project TimeGenerated, AccountName, DeviceName, ActionType, RemoteIP, RemoteIPType
 ```
-**Evidence**
+**Evidence:**
 
 <img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/d92d0f2d-7ae1-4d86-9dd7-7514881c78cb" />
 <br>
@@ -181,7 +181,7 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
 | order by Timestamp asc
 ```
-**Evidence**
+**Evidence:**
 <img width="1100" height="87" alt="image" src="https://github.com/user-attachments/assets/76ec62c3-5b4e-40ee-9bf0-af74c4ba0d29" />
 <br>
 <br>
@@ -194,11 +194,12 @@ DeviceProcessEvents
 
 **Objective:** Find the primary staging directory where malware was stored.
 
-**Flag Value:** `C:\ProgramData\WindowsCache` — `2025-11-19T19:05:33Z`
+**Flag Value:** `C:\ProgramData\WindowsCache` — `2025-11-19T19:05:33.7665036Z`
 
 **Detection Strategy:** Search for newly created directories in system folders that were subsequently hidden. Look for `mkdir` or `New-Item` commands followed by `attrib` commands that modify folder attributes.
 
-```kql
+**KQL Query:**
+```
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
@@ -206,6 +207,10 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, InitiatingProcessAccountName, FolderCreated=ProcessCommandLine, InitiatingProcessFolderPath
 | order by Timestamp asc
 ```
+**Evidence:**
+<img width="1172" height="208" alt="image" src="https://github.com/user-attachments/assets/4b7a47a9-d37c-43a8-98c2-b438350bceee" />
+<br>
+<br>
 
 > **Why This Matters:** Attackers establish staging locations to organize tools and stolen data. Identifying these directories reveals the scope of compromise and helps locate additional malicious artifacts.
 
