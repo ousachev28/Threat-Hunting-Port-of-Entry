@@ -181,11 +181,10 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, FileName, ProcessCommandLine, InitiatingProcessFileName, AccountName
 | order by Timestamp asc
 ```
+**Evidence**
 <img width="1100" height="87" alt="image" src="https://github.com/user-attachments/assets/76ec62c3-5b4e-40ee-9bf0-af74c4ba0d29" />
 <br>
 <br>
-
-**Evidence**
 
 > **Why This Matters:** Attackers enumerate network topology to identify lateral movement opportunities and high-value targets. This reconnaissance activity is a key indicator of advanced persistent threats.
 
