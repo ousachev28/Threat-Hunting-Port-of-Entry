@@ -162,7 +162,7 @@ DeviceLogonEvents
 
 **Objective:** Identify the command and argument used to enumerate network neighbours.
 
-**Flag Value:** `ARP.EXE -a` — `2025-11-19T19:04:01Z`
+**Flag Value:** `ARP.EXE -a` — `2025-11-19T19:04:01.773778Z`
 
 **Detection Strategy:** Look for commands that reveal local network devices and hardware addresses. Check `DeviceProcessEvents` for network enumeration utilities executed after initial access.
 
