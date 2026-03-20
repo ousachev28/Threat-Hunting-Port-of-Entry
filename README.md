@@ -134,17 +134,25 @@ DeviceLogonEvents
 
 **Objective:** Identify the user account that was compromised for initial access.
 
-**Flag Value:** `kenji.sato` — `2025-11-19T00:57:18Z`
+**Flag Value:** `kenji.sato` — `2025-11-19T18:36:18.503997Z`
 
-**Detection Strategy:** The `RemoteIP` was shown to have accessed the compromised account through RDP.
+**Detection Strategy:** The `RemoteIP` was shown to have accessed the compromised account `azuki-si`.
 
-```kql
+**KQL Query:**
+```
+//Public Remote IP that successfully logged on to "azuki-si"
 DeviceLogonEvents
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
-| where LogonType == "RemoteInteractive"
-| project Timestamp, AccountName, RemoteIP, AdditionalFields
-| sort by AccountName
+| where DeviceName == "azuki-sl"
+| where isnotempty(RemoteIP) and RemoteIPType == "Public"
+| where ActionType == "LogonSuccess"
+| project TimeGenerated, AccountName, DeviceName, ActionType, RemoteIP, RemoteIPType
 ```
+**Evidence**
+
+<img width="1015" height="95" alt="image" src="https://github.com/user-attachments/assets/d92d0f2d-7ae1-4d86-9dd7-7514881c78cb" />
+<br>
+<br>
 
 > **Why This Matters:** Identifying which credentials were compromised determines the scope of unauthorized access and guides remediation efforts including password resets and privilege reviews.
 
