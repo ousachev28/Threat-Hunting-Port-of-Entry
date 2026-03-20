@@ -222,7 +222,7 @@ DeviceProcessEvents
 
 **Objective:** Find how many file extensions were excluded from Windows Defender scanning.
 
-**Flag Value:** `3` — `2025-11-19T18:49:27.7301011Z`
+**Flag Value:** `3` — `2025-11-19T18:49:27.6830204Z`
 
 **Detection Strategy:** Search `DeviceRegistryEvents` for registry modifications to Windows Defender's exclusion settings. Count the unique file extensions added to the `Exclusions\Extensions` registry key.
 
@@ -237,7 +237,7 @@ DeviceRegistryEvents
 ```
 **Evidence:**
 
-<img width="936" height="144" alt="image" src="https://github.com/user-attachments/assets/a82eeb87-9780-435e-bf05-753f12a7f17c" />
+<img width="1261" height="105" alt="image" src="https://github.com/user-attachments/assets/be5393b1-bdcf-4f34-9cc1-1424c4231386" />
 <br>
 <br>
 
@@ -253,7 +253,8 @@ DeviceRegistryEvents
 
 **Detection Strategy:** Search `DeviceRegistryEvents` for folder path exclusions added to Windows Defender configuration. Focus on the `RegistryValueName` field for temporary folder paths.
 
-```kql
+**KQL Query:**
+```
 DeviceRegistryEvents
 | where DeviceName == "azuki-sl"
 | where Timestamp between (datetime(2025-11-19) .. datetime(2025-11-20))
