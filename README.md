@@ -276,7 +276,7 @@ DeviceRegistryEvents
 
 **Objective:** Identify the Windows-native binary the attacker abused to download files.
 
-**Flag Value:** `certutil.exe` — `2025-11-19T19:06:58Z`
+**Flag Value:** `certutil.exe` — `2025-11-19T19:07:21.0804181Z`
 
 **Detection Strategy:** Look for built-in Windows tools with network download capabilities. Search `DeviceProcessEvents` for processes with command lines containing URLs and output file paths.
 
@@ -289,6 +289,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1179" height="91" alt="image" src="https://github.com/user-attachments/assets/f59ef4fd-0644-4ae0-a3e0-1bbf465fdf16" />
+<br>
+<br>
 
 > **Why This Matters:** Legitimate system utilities are often weaponized to download malware while evading detection. Identifying these techniques helps improve defensive controls.
 
