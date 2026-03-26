@@ -280,6 +280,7 @@ DeviceRegistryEvents
 
 **Detection Strategy:** Look for built-in Windows tools with network download capabilities. Search `DeviceProcessEvents` for processes with command lines containing URLs and output file paths.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -303,10 +304,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the name of the scheduled task created for persistence.
 
-**Flag Value:** `Windows Update Check` — `2025-11-19T19:07:46Z`
+**Flag Value:** `Windows Update Check` — `2025-11-19T19:07:46.9796512Z`
 
 **Detection Strategy:** Search for scheduled task creation commands. Look for `schtasks.exe` with the `/create` parameter in `DeviceProcessEvents`.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -316,6 +318,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1445" height="263" alt="image" src="https://github.com/user-attachments/assets/e088f558-d2e1-476c-b98a-94f5a0308bb1" />
+<br>
+<br>
 
 > **Why This Matters:** Scheduled tasks provide reliable persistence across system reboots. The task name often attempts to blend with legitimate Windows maintenance routines.
 
@@ -325,10 +332,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the executable path configured in the scheduled task.
 
-**Flag Value:** `C:\ProgramData\WindowsCache\svchost.exe` — `2025-11-19T19:07:46Z`
+**Flag Value:** `C:\ProgramData\WindowsCache\svchost.exe` — `2025-11-19T19:07:46.9796512Z`
 
 **Detection Strategy:** Extract the task action from the scheduled task creation command line. Look for the `/tr` parameter value in the `schtasks` command.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -338,6 +346,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1405" height="270" alt="image" src="https://github.com/user-attachments/assets/f6ea45f2-dbca-4544-9433-f24910407860" />
+<br>
+<br>
 
 > **Why This Matters:** The scheduled task action defines what executes at runtime. This reveals the exact persistence mechanism and the malware location.
 
@@ -347,10 +360,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the IP address of the command and control server.
 
-**Flag Value:** `78.141.196.6` — `2025-11-19T18:37:26Z`
+**Flag Value:** `78.141.196.6` — `2025-11-19T18:37:26.3725923Z`
 
 **Detection Strategy:** Analyze network connections initiated by the suspicious executable shortly after it was downloaded. Use `DeviceNetworkEvents` to find outbound connections to external IP addresses.
 
+**KQL Query:**
 ```kql
 DeviceNetworkEvents
 | where DeviceName == "azuki-sl"
@@ -361,6 +375,11 @@ DeviceNetworkEvents
     InitiatingProcessAccountName, InitiatingProcessCommandLine, InitiatingProcessRemoteSessionDeviceName
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1371" height="328" alt="image" src="https://github.com/user-attachments/assets/50e6f3e2-e188-4d9b-86c2-2e4e7168cf1f" />
+<br>
+<br>
 
 > **Why This Matters:** Command and control infrastructure allows attackers to remotely control compromised systems. Identifying C2 servers enables network blocking and infrastructure tracking.
 
@@ -370,10 +389,11 @@ DeviceNetworkEvents
 
 **Objective:** Identify the destination port used for command and control communications.
 
-**Flag Value:** `443` — `2025-11-19T19:11:04Z`
+**Flag Value:** `443` — `2025-11-19T19:11:04.1766386Z`
 
 **Detection Strategy:** Examine the destination port for outbound connections from the malicious executable. Check `DeviceNetworkEvents` for the `RemotePort` field associated with C2 traffic.
 
+**KQL Query:**
 ```kql
 DeviceNetworkEvents
 | where DeviceName == "azuki-sl"
@@ -383,6 +403,11 @@ DeviceNetworkEvents
     InitiatingProcessAccountName, InitiatingProcessCommandLine, InitiatingProcessRemoteSessionDeviceName
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1396" height="373" alt="image" src="https://github.com/user-attachments/assets/5051c23f-5e3f-427d-b182-6580854c0b7f" />
+<br>
+<br>
 
 > **Why This Matters:** C2 communication ports can indicate the framework or protocol used. This supports network detection rules and threat intelligence correlation.
 
@@ -392,10 +417,11 @@ DeviceNetworkEvents
 
 **Objective:** Identify the filename of the credential dumping tool.
 
-**Flag Value:** `mm.exe` — `2025-11-19T19:07:22Z`
+**Flag Value:** `mm.exe` — `2025-11-19T19:07:22.8551193Z`
 
 **Detection Strategy:** Look for executables downloaded to the staging directory with short filenames. Search for files created shortly before LSASS memory access events.
 
+**KQL Query:**
 ```kql
 DeviceFileEvents
 | where DeviceName == "azuki-sl"
@@ -404,6 +430,11 @@ DeviceFileEvents
 | project Timestamp, DeviceName, FileName, ActionType, InitiatingProcessFileName, FolderPath
 | order by Timestamp desc
 ```
+**Evidence:**
+
+<img width="1263" height="235" alt="image" src="https://github.com/user-attachments/assets/0f074173-b771-4d65-a4c7-ba93bd15991d" />
+<br>
+<br>
 
 > **Why This Matters:** Credential dumping tools extract authentication secrets from system memory. These tools are typically renamed to avoid signature-based detection.
 
@@ -413,10 +444,11 @@ DeviceFileEvents
 
 **Objective:** Identify the module used to extract logon passwords from memory.
 
-**Flag Value:** `sekurlsa::logonpasswords` — `2025-11-19T19:08:26Z`
+**Flag Value:** `sekurlsa::logonpasswords` — `2025-11-19T19:08:26.2804285Z`
 
 **Detection Strategy:** Examine command line arguments passed to the credential dumping tool. Look for `module::command` syntax in the process command line or output redirection.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -426,6 +458,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1406" height="290" alt="image" src="https://github.com/user-attachments/assets/7771ca19-dbac-48ce-aa7d-237c40ab1a1b" />
+<br>
+<br>
 
 > **Why This Matters:** Credential dumping tools use specific modules to extract passwords from security subsystems. Documenting the exact technique used aids in detection engineering.
 
@@ -435,10 +472,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the compressed archive filename used for data exfiltration.
 
-**Flag Value:** `export-data.zip` — `2025-11-19T19:08:58Z`
+**Flag Value:** `export-data.zip` — `2025-11-19T19:08:58.0244963Z`
 
 **Detection Strategy:** Search for ZIP file creations in the staging directory during the collection phase. Look for `Compress-Archive` commands or examine files created before exfiltration activity.
 
+**KQL Query:**
 ```kql
 DeviceFileEvents
 | where DeviceName == "azuki-sl"
@@ -447,6 +485,11 @@ DeviceFileEvents
 | project Timestamp, DeviceName, FileName, ActionType, InitiatingProcessFileName, FolderPath
 | order by Timestamp desc
 ```
+**Evidence:**
+
+<img width="1311" height="368" alt="image" src="https://github.com/user-attachments/assets/c13e9291-a025-4e41-bd34-4a5a4485fc23" />
+<br>
+<br>
 
 > **Why This Matters:** Attackers compress stolen data for efficient exfiltration. The archive filename often includes dates or descriptive names for the attacker's organization.
 
@@ -456,10 +499,11 @@ DeviceFileEvents
 
 **Objective:** Identify the cloud service used to exfiltrate stolen data.
 
-**Flag Value:** `Discord` — `2025-11-19T19:09:21Z`
+**Flag Value:** `Discord` — `2025-11-19T19:09:21.3879432Z`
 
 **Detection Strategy:** Analyze outbound HTTPS connections and file upload operations during the exfiltration phase. Check `DeviceNetworkEvents` for connections to common file sharing or communication platforms.
 
+**KQL Query:**
 ```kql
 DeviceNetworkEvents
 | where DeviceName == "azuki-sl"
@@ -470,6 +514,11 @@ DeviceNetworkEvents
     InitiatingProcessRemoteSessionDeviceName, AdditionalFields
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1514" height="258" alt="image" src="https://github.com/user-attachments/assets/f741d5a3-8205-428a-9880-6c1abdfae7ff" />
+<br>
+<br>
 
 > **Why This Matters:** Cloud services with upload capabilities are frequently abused for data theft. Identifying the service helps with incident scope determination and potential data recovery.
 
@@ -479,10 +528,11 @@ DeviceNetworkEvents
 
 **Objective:** Identify the first Windows event log cleared by the attacker.
 
-**Flag Value:** `Security` — `2025-11-19T19:11:39Z`
+**Flag Value:** `Security` — `2025-11-19T19:11:39.0934399Z`
 
 **Detection Strategy:** Search for event log clearing commands near the end of the attack timeline. Look for `wevtutil.exe` executions and identify which log was cleared first.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -492,6 +542,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1436" height="352" alt="image" src="https://github.com/user-attachments/assets/05162083-f494-45b6-afb3-a8e4a0e7feae" />
+<br>
+<br>
 
 > **Why This Matters:** Clearing event logs destroys forensic evidence and impedes investigation efforts. The order of log clearing can indicate attacker priorities and sophistication.
 
@@ -501,10 +556,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the backdoor account username created by the attacker.
 
-**Flag Value:** `support` — `2025-11-19T19:09:53Z`
+**Flag Value:** `support` — `2025-11-19T19:09:48.930144Z`
 
 **Detection Strategy:** Search for account creation commands during the impact phase. Look for commands with the `/add` parameter followed by administrator group additions.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -514,6 +570,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1424" height="329" alt="image" src="https://github.com/user-attachments/assets/ed33ff67-836a-495e-a6ab-03edadbcd5cd" />
+<br>
+<br>
 
 > **Why This Matters:** Hidden administrator accounts provide alternative access for future operations. These accounts are often configured to avoid appearing in normal user interfaces.
 
@@ -523,10 +584,11 @@ DeviceProcessEvents
 
 **Objective:** Identify the PowerShell script file used to automate the attack chain.
 
-**Flag Value:** `wupdate.ps1` — `2025-11-19T18:49:48Z`
+**Flag Value:** `wupdate.ps1` — `2025-11-19T18:46:28.1994125Z`
 
 **Detection Strategy:** Search `DeviceFileEvents` for script files created in temporary directories during the initial compromise phase. Look for PowerShell or batch script files downloaded from external sources shortly after initial access.
 
+**KQL Query:**
 ```kql
 DeviceFileEvents
 | where DeviceName == "azuki-sl"
@@ -535,6 +597,11 @@ DeviceFileEvents
 | project Timestamp, DeviceName, FileName, ActionType, InitiatingProcessFileName, FolderPath
 | order by Timestamp desc
 ```
+**Evidence:**
+
+<img width="1327" height="230" alt="image" src="https://github.com/user-attachments/assets/baeff09b-e640-4e66-aa8a-8ad4939d8b76" />
+<br>
+<br>
 
 > **Why This Matters:** Attackers often use scripting languages to automate their attack chain. Identifying the initial attack script reveals the entry point and automation method used in the compromise.
 
@@ -544,10 +611,11 @@ DeviceFileEvents
 
 **Objective:** What IP address was targeted for lateral movement?
 
-**Flag Value:** `10.1.0.188` — `2025-11-19T19:10:42Z`
+**Flag Value:** `10.1.0.188` — `2025-11-19T19:10:42.057693Z`
 
 **Detection Strategy:** Examine the target system specified in remote access commands during lateral movement. Look for IP addresses used with `cmdkey` or `mstsc` commands near the end of the attack timeline.
 
+**KQL Query:**
 ```kql
 DeviceNetworkEvents
 | where DeviceName == "azuki-sl"
@@ -558,6 +626,11 @@ DeviceNetworkEvents
     InitiatingProcessRemoteSessionDeviceName, AdditionalFields
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1377" height="110" alt="image" src="https://github.com/user-attachments/assets/2a5a698a-6d1b-4316-b1d9-affdde95bff4" />
+<br>
+<br>
 
 > **Why This Matters:** Lateral movement targets are selected based on their access to sensitive data or network privileges. Identifying these targets reveals attacker objectives.
 
@@ -567,10 +640,11 @@ DeviceNetworkEvents
 
 **Objective:** Identify the remote access tool used for lateral movement.
 
-**Flag Value:** `mstsc.exe` — `2025-11-19T19:10:41Z`
+**Flag Value:** `mstsc.exe` — `2025-11-19T19:10:41.372526Z`
 
 **Detection Strategy:** Search for remote desktop connection utilities executed near the end of the attack timeline. Look for processes launched with remote system names or IP addresses as arguments.
 
+**KQL Query:**
 ```kql
 DeviceProcessEvents
 | where DeviceName == "azuki-sl"
@@ -580,6 +654,11 @@ DeviceProcessEvents
     InitiatingProcessFolderPath, AdditionalFields, InitiatingProcessCommandLine
 | order by Timestamp asc
 ```
+**Evidence:**
+
+<img width="1427" height="335" alt="image" src="https://github.com/user-attachments/assets/94f4eaec-5554-45cc-83fc-5bf6cbe9a07d" />
+<br>
+<br>
 
 > **Why This Matters:** Built-in remote access tools are preferred for lateral movement as they blend with legitimate administrative activity. This technique is harder to detect than custom tools.
 
